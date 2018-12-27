@@ -2,4 +2,5 @@
 *.png
 .idea/
 *.iml
-
+/bazel-*
+/.vagrant/

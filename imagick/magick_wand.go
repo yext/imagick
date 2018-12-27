@@ -5,6 +5,14 @@
 package imagick
 
 /*
+#cgo CFLAGS: -DMAGICKCORE_QUANTUM_DEPTH=16
+#cgo CFLAGS: -DMAGICKCORE_HDRI_ENABLE=0
+#cgo darwin CFLAGS: -Wno-ignored-attributes
+#cgo CFLAGS: -I../libs/include
+#cgo linux LDFLAGS: -L../libs/linux
+#cgo darwin LDFLAGS: -L../libs/darwin
+#cgo LDFLAGS: -lMagickWand-6.Q16 -lMagickCore-6.Q16 -ljpeg -llcms2 -lpng16 -lpng -ltiff -ltiffxx -lwebp -lz -lm
+
 #include <wand/MagickWand.h>
 */
 import "C"

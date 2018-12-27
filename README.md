@@ -1,3 +1,65 @@
+# Fork
+
+This is a fork of the gographics/imagick package to work with Bazel. It includes
+compiled object files for MacOS and Linux/CentOS6 for ImageMagick 6.9.9-26, by
+downloading it and its dependencies and compiling it all from source.
+
+These instructions assume a MacOS host.
+
+## Rebuilding ImageMagick and dependencies
+
+This is only necessary if you want to rebuild the native libraries, for example
+to add new delegates (support for more image formats) or upgrading the library.
+
+Linux (CentOS6):
+
+```
+vagrant up build
+vagrant scp 'build:/home/vagrant/imagemagick-build/include' libs/
+vagrant scp 'build:/home/vagrant/imagemagick-build/lib/*.a' libs/linux/
+```
+
+MacOS (High Sierra):
+
+```
+bash download-build-imagemagick.sh
+cp ~/imagemagick-build/lib/*.a libs/darwin
+```
+
+
+This is a good overview of the settings if you need to make changes to the
+script:
+
+http://imagemagick.sourceforge.net/http/www/install.html
+
+## Testing that it works in development
+
+Linux
+
+```
+vagrant up dev
+vagrant ssh dev -c 'bazel test imagick:go_default_test'
+```
+
+MacOS
+
+```
+bazel test imagick:go_default_test
+```
+
+## Testing that it works in production
+
+Linux
+
+```
+vagrant up dev prod
+vagrant ssh dev -c 'cd /vagrant && bazel build imagick:go_default_test'
+vagrant scp dev:/vagrant/bazel-bin/imagick/linux_amd64_stripped/go_default_test .
+vagrant scp go_default_test prod:/home/vagrant/
+vagrant ssh prod -c ./go_default_test
+```
+
+
 # Go Imagick
 
 [![GoDoc](https://godoc.org/gopkg.in/gographics/imagick.v2/imagick?status.svg)](https://gopkg.in/gographics/imagick.v2/imagick) [![Travis Build Status](https://api.travis-ci.org/gographics/imagick.svg)](https://travis-ci.org/gographics/imagick)

@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+
+LIBS = [
+    "libMagickWand-6.Q16.a",
+    "libMagickCore-6.Q16.a",
+    "libjpeg.a",
+    "liblcms2.a",
+    "libpng16.a",
+    "libpng.a",
+    "libtiff.a",
+    "libtiffxx.a",
+    "libwebp.a",
+    "libz.a",
+]
+
+cc_library(
+    name = "libMagick",
+    srcs = select({
+        "@io_bazel_rules_go//go/platform:darwin": ["darwin/" + lib for lib in LIBS],
+        "@io_bazel_rules_go//go/platform:linux": ["linux/" + lib for lib in LIBS],
+        "//conditions:default": ["UNSUPPORTED_PLATFORM"],
+    }),
+    hdrs = glob(["include/**/*"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)

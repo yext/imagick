@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = glob(
+        ["*.go"],
+        exclude = ["*_test.go"],
+    ),
+    cdeps = ["//libs:libMagick"],
+    cgo = True,
+    copts = [
+        "-DMAGICKCORE_QUANTUM_DEPTH=16",
+        "-DMAGICKCORE_HDRI_ENABLE=0",
+    ],
+    importpath = "github.com/yext/imagick/imagick",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = glob(["*_test.go"]),
+    embed = [":go_default_library"],
+)
