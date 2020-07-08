@@ -1015,9 +1015,7 @@
 #endif
 
 /* Define to 1 if you have the <xlocale.h> header file. */
-#ifndef MAGICKCORE_HAVE_XLOCALE_H
-#define MAGICKCORE_HAVE_XLOCALE_H 1
-#endif
+/* #undef HAVE_XLOCALE_H */
 
 /* Define to 1 if you have the `_aligned_malloc' function. */
 /* #undef HAVE__ALIGNED_MALLOC */

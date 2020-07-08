@@ -48,9 +48,9 @@ extern "C" {
 #define MagickppLibAddendum  "-7"
 #define MagickppLibInterface  3
 #define MagickppLibMinInterface  3
-#define MagickReleaseDate  "2019-01-16"
+#define MagickReleaseDate  "2020-07-08"
 #define MagickChangeDate   "20140218"
-#define MagickFeatures "DPC OpenMP"
+#define MagickFeatures "DPC"
 #define MagickDelegates "mpeg jng jpeg lcms png tiff webp zlib"
 #define MagickHomeURL  "file:///usr/local/share/doc/ImageMagick-6/index.html"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"

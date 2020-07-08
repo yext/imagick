@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script can be used on either Linux or MacOS to build ImageMagick and
 # dependent static libraries.
@@ -138,5 +138,13 @@ cd ..
     --with-x=no                       \
     --with-xml=no                     \
     --with-zlib=no
+
+
+# The -fPIE compilation flag is required to support cross-compilation between
+# CentOS and Ubuntu but is not a configurable option. It is injected into CFLAGS
+# if not found.
+if [ "$OS" != "Darwin" ] && ! grep -q '^CFLAGS *=.*-fPIE' Makefile; then
+    sed -i -e 's/^CFLAGS *=.*/& -fPIE/g' Makefile
+fi
 
 make install

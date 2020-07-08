@@ -1,22 +1,32 @@
 # Fork
 
 This is a fork of the gographics/imagick package to work with Bazel. It includes
-compiled object files for MacOS and Linux/CentOS6 for ImageMagick 6.9.9-26, by
-downloading it and its dependencies and compiling it all from source.
+compiled object files for MacOS and Linux (CentOS/7 and Ubuntu 18.04) for
+ImageMagick 6.8.8-7, by downloading it and its dependencies and compiling it all
+from source.
 
 These instructions assume a MacOS host.
+
+Note that Linux systems that ultimately run the binaries linked to these object
+files require glibc 2.14 or later. The stable versions of glibc for Ubuntu 18.04
+and CentOS/7 are 2.27 and 2.17, respectively. The installed version of glibc on
+a Linux system can be checked by running `ldd --version`.
 
 ## Rebuilding ImageMagick and dependencies
 
 This is only necessary if you want to rebuild the native libraries, for example
 to add new delegates (support for more image formats) or upgrading the library.
 
-Linux (CentOS6):
+Linux (Ubuntu 18.04):
 
 ```
 vagrant up build
-vagrant scp 'build:/home/vagrant/imagemagick-build/include' libs/
+rm -rf libs/include/*
+rm -rf libs/linux/*
+vagrant scp 'build:/home/vagrant/imagemagick-build/include/*.h' libs/include/
+vagrant scp 'build:/home/vagrant/imagemagick-build/include/ImageMagick-6/*' libs/include/
 vagrant scp 'build:/home/vagrant/imagemagick-build/lib/*.a' libs/linux/
+sed -i '' -e 's|home/vagrant/imagemagick-build|usr/local|g' libs/include/magick/*.h
 ```
 
 MacOS (High Sierra):
@@ -34,11 +44,11 @@ http://imagemagick.sourceforge.net/http/www/install.html
 
 ## Testing that it works in development
 
-Linux
+Linux (Ubuntu 18.04)
 
 ```
 vagrant up dev
-vagrant ssh dev -c 'bazel test imagick:go_default_test'
+vagrant ssh dev -c 'cd /vagrant && bazel test imagick:go_default_test'
 ```
 
 MacOS
@@ -49,7 +59,7 @@ bazel test imagick:go_default_test
 
 ## Testing that it works in production
 
-Linux
+Linux (CentOS/7)
 
 ```
 vagrant up dev prod

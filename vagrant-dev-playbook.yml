@@ -5,25 +5,22 @@
 
   tasks:
 
-    - name: add ius-release yum repo for git2
-      yum:
-        name: https://centos7.iuscommunity.org/ius-release.rpm
+    - name: add bazel gpg key
+      apt_key:
+        url: https://bazel.build/bazel-release.pub.gpg
+        state: present
 
-    - name: add bazel yum repo
-      yum_repository:
-        name: copr
-        description: Copr repo for bazel owned by vbatts
-        baseurl: https://copr-be.cloud.fedoraproject.org/results/vbatts/bazel/epel-7-$basearch/
-        gpgcheck: yes
-        gpgkey: https://copr-be.cloud.fedoraproject.org/results/vbatts/bazel/pubkey.gpg
-        repo_gpgcheck: no
+    - name: add bazel apt repo
+      apt_repository:
+        repo: deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8
+        state: present
 
     - name: install bazel and dependencies
-      yum:
+      apt:
         name:
           - unzip
           - patch
-          - git2u-all
-          - gcc-c++
+          - git
+          - build-essential
           - bazel
           - golang
