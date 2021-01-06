@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
 
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore private application programming interface declarations.
 */
-#ifndef _MAGICKCORE_STUDIO_H
-#define _MAGICKCORE_STUDIO_H
+#ifndef MAGICKCORE_STUDIO_H
+#define MAGICKCORE_STUDIO_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -30,8 +30,8 @@ extern "C" {
 
 #define MAGICKCORE_IMPLEMENTATION  1
 
-#if !defined(_MAGICKCORE_CONFIG_H)
-# define _MAGICKCORE_CONFIG_H
+#if !defined(MAGICKCORE_CONFIG_H)
+# define MAGICKCORE_CONFIG_H
 # if !defined(vms) && !defined(macintosh)
 #  include "magick/magick-config.h"
 # else
@@ -45,9 +45,6 @@ extern "C" {
 #endif
 #if defined(_magickcore_inline) && !defined(inline)
 # define inline  _magickcore_inline
-#endif
-#if defined(_magickcore_restrict) && !defined(restrict)
-# define restrict  _magickcore_restrict
 #endif
 # if defined(__cplusplus) || defined(c_plusplus)
 #  undef inline
@@ -75,6 +72,13 @@ extern "C" {
 #  include <stdlib.h>
 # endif
 #endif
+#if !defined(magick_restrict)
+# if !defined(_magickcore_restrict)
+#  define magick_restrict restrict
+# else
+#  define magick_restrict _magickcore_restrict
+# endif
+#endif
 #if defined(MAGICKCORE_HAVE_STRING_H)
 # if !defined(STDC_HEADERS) && defined(MAGICKCORE_HAVE_MEMORY_H)
 #  include <memory.h>
@@ -97,8 +101,10 @@ extern "C" {
 #define _CRTDBG_MAP_ALLOC
 #endif
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
-# include <direct.h>
 # include <io.h>
+#if !defined(__CYGWIN__)
+# include <direct.h>
+#endif
 # if !defined(MAGICKCORE_HAVE_STRERROR)
 #  define HAVE_STRERROR
 # endif
@@ -119,9 +125,16 @@ extern "C" {
 #endif
 #if defined(MAGICKCORE_THREAD_SUPPORT)
 # include <pthread.h>
-#elif defined(MAGICKCORE_WINDOWS_SUPPORT)
-#  define MAGICKCORE_HAVE_WINTHREADS  1
+#endif
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#if !defined(__CYGWIN__)
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#endif
 #include <windows.h>
+#ifdef _MSC_VER
+#pragma comment (lib, "ws2_32.lib")
+#endif
 #endif
 #if defined(MAGICKCORE_HAVE_SYS_SYSLIMITS_H)
 # include <sys/syslimits.h>
@@ -130,7 +143,7 @@ extern "C" {
 # include <arm/limits.h>
 #endif
 
-#if defined(MAGICKCORE__OPENCL)
+#if defined(MAGICKCORE__OPENCL) && !defined(MAGICK_PIXEL_RGBA)
 #if defined(MAGICKCORE_HAVE_CL_CL_H)
 #  include <CL/cl.h>
 #endif
@@ -166,7 +179,7 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(MAGICKCORE_POSIX_SUPPORT)
 # include <sys/types.h>
 # include <sys/stat.h>
-# if defined(MAGICKCORE_HAVE_FTIME)
+# if defined(MAGICKCORE_HAVE_SYS_TIMEB_H)
 # include <sys/timeb.h>
 # endif
 # if defined(MAGICKCORE_POSIX_SUPPORT)
@@ -206,6 +219,15 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 # endif
 # if defined(MAGICKCORE_HAVE_SYS_MMAN_H)
 #  include <sys/mman.h>
+# endif
+# if defined(MAGICKCORE_HAVE_SYS_SENDFILE_H)
+#  include <sys/sendfile.h>
+# endif
+# if defined(MAGICKCORE_HAVE_SYS_SOCKET_H)
+#  include <sys/socket.h>
+# endif
+# if defined(MAGICKCORE_HAVE_SYS_UIO_H)
+#  include <sys/uio.h>
 # endif
 #endif
 #else
@@ -248,7 +270,7 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 /*
   Review these platform specific definitions.
 */
-#if defined(MAGICKCORE_POSIX_SUPPORT) && !defined(__OS2__)
+#if ( defined(MAGICKCORE_POSIX_SUPPORT) && !defined(__OS2__) ) && !defined( __VMS ) 
 # define DirectorySeparator  "/"
 # define DirectoryListSeparator  ':'
 # define EditorOptions  " -title \"Edit Image Comment\" -e vi"
@@ -322,8 +344,6 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 #  define SetNotifyHandlers \
     SetErrorHandler(NTErrorHandler); \
     SetWarningHandler(NTWarningHandler)
-#  undef sleep
-#  define sleep(seconds)  Sleep(seconds*1000)
 #  if !defined(MAGICKCORE_HAVE_TIFFCONF_H)
 #    define HAVE_TIFFCONF_H
 #  endif
@@ -358,6 +378,7 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 /*
   Magick defines.
 */
+#define MagickMaxRecursionDepth  600
 #define Swap(x,y) ((x)^=(y), (y)^=(x), (x)^=(y))
 #if defined(_MSC_VER)
 # define DisableMSCWarning(nr) __pragma(warning(push)) \

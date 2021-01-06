@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore timer methods.
 */
-#ifndef _MAGICKCORE_TIMER_H
-#define _MAGICKCORE_TIMER_H
+#ifndef MAGICKCORE_TIMER_H
+#define MAGICKCORE_TIMER_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -56,6 +56,9 @@ extern MagickExport double
 
 extern MagickExport MagickBooleanType
   ContinueTimer(TimerInfo *);
+
+extern MagickExport ssize_t
+  FormatMagickTime(const time_t,const size_t,char *);
 
 extern MagickExport TimerInfo
   *AcquireTimerInfo(void),

@@ -27,6 +27,7 @@ vagrant scp 'build:/home/vagrant/imagemagick-build/include/*.h' libs/include/
 vagrant scp 'build:/home/vagrant/imagemagick-build/include/ImageMagick-6/*' libs/include/
 vagrant scp 'build:/home/vagrant/imagemagick-build/lib/*.a' libs/linux/
 sed -i '' -e 's|home/vagrant/imagemagick-build|usr/local|g' libs/include/magick/*.h
+patch -p0 < pixel-wand.patch
 ```
 
 MacOS (High Sierra):
@@ -35,7 +36,6 @@ MacOS (High Sierra):
 bash download-build-imagemagick.sh
 cp ~/imagemagick-build/lib/*.a libs/darwin
 ```
-
 
 This is a good overview of the settings if you need to make changes to the
 script:
@@ -51,6 +51,16 @@ vagrant up dev
 vagrant ssh dev -c 'cd /vagrant && bazel test imagick:go_default_test'
 ```
 
+If you make changes to the library after provisioning your vagrant VM,
+you will need to rsync those changes for them to be visible.
+
+```
+vagrant rsync dev
+```
+
+You will also want to run `bazel clean`, as inappropriate caching of C
+artifacts has been observed.
+
 MacOS
 
 ```
@@ -64,7 +74,8 @@ Linux (CentOS/7)
 ```
 vagrant up dev prod
 vagrant ssh dev -c 'cd /vagrant && bazel build imagick:go_default_test'
-vagrant scp dev:/vagrant/bazel-bin/imagick/linux_amd64_stripped/go_default_test .
+vagrant scp dev:/vagrant/bazel-bin/imagick/go_default_test_/go_default_test .
+chmod a+rwX go_default_test
 vagrant scp go_default_test prod:/home/vagrant/
 vagrant ssh prod -c ./go_default_test
 ```

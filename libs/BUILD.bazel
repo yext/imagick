@@ -3,14 +3,18 @@ package(default_visibility = ["//visibility:public"])
 LIBS = [
     "libMagickWand-6.Q16.a",
     "libMagickCore-6.Q16.a",
+    "libwebpdemux.a",
+    "libwebpmux.a",
+    "libwebpdecoder.a",
+    "libwebp.a",
     "libjpeg.a",
     "liblcms2.a",
     "libpng16.a",
     "libpng.a",
     "libtiff.a",
     "libtiffxx.a",
-    "libwebp.a",
     "libz.a",
+    "libltdl.a",
 ]
 
 cc_library(

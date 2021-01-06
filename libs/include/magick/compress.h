@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image compression/decompression methods.
 */
-#ifndef _MAGICKCORE_COMPRESS_H
-#define _MAGICKCORE_COMPRESS_H
+#ifndef MAGICKCORE_COMPRESS_H
+#define MAGICKCORE_COMPRESS_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -45,7 +45,9 @@ typedef enum
   B44ACompression,
   LZMACompression,            /* Lempel-Ziv-Markov chain algorithm */
   JBIG1Compression,           /* ISO/IEC std 11544 / ITU-T rec T.82 */
-  JBIG2Compression            /* ISO/IEC std 14492 / ITU-T rec T.88 */
+  JBIG2Compression,           /* ISO/IEC std 14492 / ITU-T rec T.88 */
+  ZstdCompression,
+  WebPCompression
 } CompressionType;
 
 typedef struct _Ascii85Info
@@ -54,9 +56,9 @@ typedef struct _Ascii85Info
 extern MagickExport MagickBooleanType
   HuffmanDecodeImage(Image *),
   HuffmanEncodeImage(const ImageInfo *,Image *,Image *),
-  LZWEncodeImage(Image *,const size_t,unsigned char *),
-  PackbitsEncodeImage(Image *,const size_t,unsigned char *),
-  ZLIBEncodeImage(Image *,const size_t,unsigned char *);
+  LZWEncodeImage(Image *,const size_t,unsigned char *magick_restrict),
+  PackbitsEncodeImage(Image *,const size_t,unsigned char *magick_restrict),
+  ZLIBEncodeImage(Image *,const size_t,unsigned char *magick_restrict);
 
 extern MagickExport void
   Ascii85Encode(Image *,const unsigned char),

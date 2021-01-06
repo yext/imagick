@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image color methods.
 */
-#ifndef _MAGICKCORE_COLOR_H
-#define _MAGICKCORE_COLOR_H
+#ifndef MAGICKCORE_COLOR_H
+#define MAGICKCORE_COLOR_H
 
 #include "magick/pixel.h"
 #include "magick/exception.h"
@@ -29,9 +29,11 @@ typedef enum
 {
   UndefinedCompliance,
   NoCompliance = 0x0000,
+  CSSCompliance = 0x0001,
   SVGCompliance = 0x0001,
   X11Compliance = 0x0002,
   XPMCompliance = 0x0004,
+  MVGCompliance = 0x0008,
   AllCompliance = 0x7fffffff
 } ComplianceType;
 
@@ -77,13 +79,10 @@ extern MagickExport const ColorInfo
 extern MagickExport MagickBooleanType
   ColorComponentGenesis(void),
   IsColorSimilar(const Image *,const PixelPacket *,const PixelPacket *),
-  IsGrayImage(const Image *,ExceptionInfo *),
   IsImageSimilar(const Image *,const Image *,ssize_t *x,ssize_t *y,
     ExceptionInfo *),
   IsMagickColorSimilar(const MagickPixelPacket *,const MagickPixelPacket *),
-  IsMonochromeImage(const Image *,ExceptionInfo *),
   IsOpacitySimilar(const Image *,const PixelPacket *,const PixelPacket *),
-  IsOpaqueImage(const Image *,ExceptionInfo *),
   ListColorInfo(FILE *,ExceptionInfo *),
   QueryColorCompliance(const char *,const ComplianceType,PixelPacket *,
     ExceptionInfo *),

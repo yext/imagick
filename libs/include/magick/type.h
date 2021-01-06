@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image type methods.
 */
-#ifndef _MAGICKCORE_TYPE_H
-#define _MAGICKCORE_TYPE_H
+#ifndef MAGICKCORE_TYPE_H
+#define MAGICKCORE_TYPE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -43,7 +43,8 @@ typedef enum
   NormalStyle,
   ItalicStyle,
   ObliqueStyle,
-  AnyStyle
+  AnyStyle,
+  BoldStyle  /* deprecated */
 } StyleType;
 
 typedef struct _TypeInfo
@@ -97,7 +98,7 @@ extern MagickExport const TypeInfo
     const size_t,ExceptionInfo *),
   **GetTypeInfoList(const char *,size_t *,ExceptionInfo *);
 
-MagickExport void
+extern MagickExport void
   TypeComponentTerminus(void);
 
 #if defined(__cplusplus) || defined(c_plusplus)

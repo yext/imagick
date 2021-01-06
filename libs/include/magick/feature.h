@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore feature methods.
 */
-#ifndef _MAGICKCORE_FEATURE_H
-#define _MAGICKCORE_FEATURE_H
+#ifndef MAGICKCORE_FEATURE_H
+#define MAGICKCORE_FEATURE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -46,6 +46,14 @@ typedef struct _ChannelFeatures
 
 extern MagickExport ChannelFeatures
   *GetImageChannelFeatures(const Image *,const size_t,ExceptionInfo *);
+
+extern MagickExport Image
+  *CannyEdgeImage(const Image *,const double,const double,const double,
+    const double,ExceptionInfo *),
+  *HoughLineImage(const Image *,const size_t,const size_t,const size_t,
+    ExceptionInfo *),
+  *MeanShiftImage(const Image *,const size_t,const size_t,const double,
+    ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

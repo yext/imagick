@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-  
-  You may not use this file except in compliance with the License.
+
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
-  
-    http://www.imagemagick.org/script/license.php
-  
+
+    https://imagemagick.org/script/license.php
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +15,8 @@
 
   MagickCore utility methods.
 */
-#ifndef _MAGICKCORE_UTILITY_H
-#define _MAGICKCORE_UTILITY_H
+#ifndef MAGICKCORE_UTILITY_H
+#define MAGICKCORE_UTILITY_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -32,17 +32,14 @@ typedef enum
   BasePath,
   ExtensionPath,
   SubimagePath,
-  CanonicalPath
+  CanonicalPath,
+  SubcanonicalPath
 } PathType;
 
 extern MagickExport char
   *Base64Encode(const unsigned char *,const size_t,size_t *),
   **GetPathComponents(const char *,size_t *),
   **ListFiles(const char *,const char *,size_t *);
-
-extern MagickExport int
-  SystemCommand(const MagickBooleanType,const MagickBooleanType,const char *,
-    ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
   AcquireUniqueFilename(char *),
@@ -53,7 +50,7 @@ extern MagickExport MagickBooleanType
   IsPathAccessible(const char *);
 
 extern MagickExport size_t
-  MultilineCensus(const char *);
+  MultilineCensus(const char *) magick_attribute((__pure__));
 
 extern MagickExport ssize_t
   GetMagickPageSize(void);

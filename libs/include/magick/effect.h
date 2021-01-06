@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image effects methods.
 */
-#ifndef _MAGICKCORE_EFFECT_H
-#define _MAGICKCORE_EFFECT_H
+#ifndef MAGICKCORE_EFFECT_H
+#define MAGICKCORE_EFFECT_H
 
 #include "magick/morphology.h"
 
@@ -81,13 +81,17 @@ extern MagickExport Image
   *GaussianBlurImage(const Image *,const double,const double,ExceptionInfo *),
   *GaussianBlurImageChannel(const Image *,const ChannelType,const double,
     const double,ExceptionInfo *),
+  *KuwaharaImage(const Image *,const double,const double,ExceptionInfo *),
+  *KuwaharaImageChannel(const Image *,const ChannelType,const double,
+    const double,ExceptionInfo *),
+  *LocalContrastImage(const Image *,const double,const double,ExceptionInfo *),
   *MotionBlurImage(const Image *,const double,const double,const double,
     ExceptionInfo *),
   *MotionBlurImageChannel(const Image *,const ChannelType,const double,
     const double,const double,ExceptionInfo *),
   *PreviewImage(const Image *,const PreviewType,ExceptionInfo *),
-  *RadialBlurImage(const Image *,const double,ExceptionInfo *),
-  *RadialBlurImageChannel(const Image *,const ChannelType,const double,
+  *RotationalBlurImage(const Image *,const double,ExceptionInfo *),
+  *RotationalBlurImageChannel(const Image *,const ChannelType,const double,
     ExceptionInfo *),
   *SelectiveBlurImage(const Image *,const double,const double,const double,
     ExceptionInfo *),

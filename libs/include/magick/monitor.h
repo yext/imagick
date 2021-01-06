@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore progress monitor methods.
 */
-#ifndef _MAGICKCORE_MONITOR_H
-#define _MAGICKCORE_MONITOR_H
+#ifndef MAGICKCORE_MONITOR_H
+#define MAGICKCORE_MONITOR_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -25,6 +25,10 @@ extern "C" {
 typedef MagickBooleanType
   (*MagickProgressMonitor)(const char *,const MagickOffsetType,
     const MagickSizeType,void *);
+
+MagickExport MagickBooleanType
+  SetImageProgress(const Image *,const char *,const MagickOffsetType,
+    const MagickSizeType);
 
 MagickExport MagickProgressMonitor
   SetImageProgressMonitor(Image *,const MagickProgressMonitor,void *),

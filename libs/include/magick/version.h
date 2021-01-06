@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,14 +26,13 @@ extern "C" {
   Define declarations.
 */
 #define MagickPackageName "ImageMagick"
-#define MagickCopyright  "Copyright (C) 1999-2014 ImageMagick Studio LLC"
-#define MagickSVNRevision  "14909"
-#define MagickLibVersion  0x688
-#define MagickLibVersionText  "6.8.8"
-#define MagickLibVersionNumber  2,0,0
-#define MagickLibAddendum  "-7"
-#define MagickLibInterface  2
-#define MagickLibMinInterface  2
+#define MagickCopyright  "© 1999-2020 ImageMagick Studio LLC"
+#define MagickLibVersion  0x69B
+#define MagickLibVersionText  "6.9.11"
+#define MagickLibVersionNumber  6,0,0
+#define MagickLibAddendum  "-55"
+#define MagickLibInterface  6
+#define MagickLibMinInterface  6
 #if defined(_WINDOWS)
 #  if defined(_WIN64)
 #    define MagickPlatform "x64"
@@ -43,17 +42,16 @@ extern "C" {
 #else
 #define MagickPlatform  "x86_64"
 #endif
-#define MagickppLibVersionText  "6.8.8"
-#define MagickppLibVersionNumber  3:0:0
-#define MagickppLibAddendum  "-7"
-#define MagickppLibInterface  3
-#define MagickppLibMinInterface  3
-#define MagickReleaseDate  "2020-07-08"
-#define MagickChangeDate   "20140218"
-#define MagickFeatures "DPC"
-#define MagickDelegates "mpeg jng jpeg lcms png tiff webp zlib"
+#define MagickppLibVersionText  "6.9.11"
+#define MagickppLibVersionNumber  8:0:0
+#define MagickppLibAddendum  "-55"
+#define MagickppLibInterface  8
+#define MagickppLibMinInterface  8
+#define MagickReleaseDate  "2021-01-06"
 #define MagickHomeURL  "file:///usr/local/share/doc/ImageMagick-6/index.html"
-#define MagickAuthoritativeURL  "http://www.imagemagick.org"
+#define MagickAuthoritativeLicense  \
+  "https://imagemagick.org/script/license.php"
+#define MagickAuthoritativeURL  "https://imagemagick.org"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
 #define MagickQuantumDepth  "Q8"
 #define MagickQuantumRange  "255"
@@ -79,13 +77,14 @@ extern MagickExport char
   *GetMagickHomeURL(void);
 
 extern MagickExport const char
-  *GetMagickCopyright(void),
-  *GetMagickDelegates(void),
-  *GetMagickFeatures(void),
-  *GetMagickPackageName(void),
+  *GetMagickCopyright(void) magick_attribute((__const__)),
+  *GetMagickDelegates(void) magick_attribute((__const__)),
+  *GetMagickFeatures(void) magick_attribute((__const__)),
+  *GetMagickLicense(void) magick_attribute((__const__)),
+  *GetMagickPackageName(void) magick_attribute((__const__)),
   *GetMagickQuantumDepth(size_t *),
   *GetMagickQuantumRange(size_t *),
-  *GetMagickReleaseDate(void),
+  *GetMagickReleaseDate(void) magick_attribute((__const__)),
   *GetMagickVersion(size_t *);
 
 extern MagickExport void

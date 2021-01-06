@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image colorspace methods.
 */
-#ifndef _MAGICKCORE_COLORSPACE_H
-#define _MAGICKCORE_COLORSPACE_H
+#ifndef MAGICKCORE_COLORSPACE_H
+#define MAGICKCORE_COLORSPACE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -26,7 +26,7 @@ typedef enum
 {
   UndefinedColorspace,
   RGBColorspace,            /* Linear RGB colorspace */
-  GRAYColorspace,           /* greyscale (linear) image (faked 1 channel) */
+  GRAYColorspace,           /* greyscale (non-linear) image (faked 1 channel) */
   TransparentColorspace,
   OHTAColorspace,
   LabColorspace,
@@ -57,12 +57,19 @@ typedef enum
   HSIColorspace,
   HSVColorspace,            /* alias for HSB */
   HCLpColorspace,
-  YDbDrColorspace
+  YDbDrColorspace,
+  xyYColorspace,
+  LinearGRAYColorspace      /* greyscale (linear) image (faked 1 channel) */
 } ColorspaceType;
+
+extern MagickExport ColorspaceType
+  GetImageColorspaceType(const Image *,ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
   RGBTransformImage(Image *,const ColorspaceType),
   SetImageColorspace(Image *,const ColorspaceType),
+  SetImageGray(Image *,ExceptionInfo *),
+  SetImageMonochrome(Image *,ExceptionInfo *),
   TransformImageColorspace(Image *,const ColorspaceType),
   TransformRGBImage(Image *,const ColorspaceType);
 

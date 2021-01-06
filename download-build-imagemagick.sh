@@ -18,9 +18,9 @@
 #
 # Delegates: mpeg jng jpeg lcms png ps tiff webp zlib
 
-set -e
+set -eo pipefail
 
-IMAGEMAGICK_URL=https://www.yext-static.com/cms/imagemagick/ImageMagick-6.8.8-7.tar.xz
+IMAGEMAGICK_URL=https://github.com/ImageMagick/ImageMagick6/archive/6.9.11-55.tar.gz
 
 OS=$(uname -s)
 function _tar_xz() {
@@ -33,15 +33,28 @@ function _tar_xz() {
 
 # Create a temp directory to work in
 IMBUILD=`echo ~/imagemagick-build`
-mkdir $IMBUILD
+mkdir -p $IMBUILD
 echo "Work directory: $IMBUILD"
 
 # Download ImageMagick
 cd $IMBUILD
-curl -O $IMAGEMAGICK_URL
-_tar_xz *.xz
-rm *.xz
+curl -sLO $IMAGEMAGICK_URL
+tar xzf *.gz
+rm *.gz
 cd ImageMagick*
+IMAGICK=`pwd`
+echo "ImageMagick directory: $IMAGICK"
+
+##############################
+# Install tools
+##############################
+
+if ! command -v m4 &> /dev/null; then
+    sudo apt-get install m4 pkg-config
+fi
+if ! command -v pkg-config &> /dev/null; then
+    sudo apt-get install pkg-config
+fi
 
 ##############################
 # Delegates
@@ -49,48 +62,59 @@ cd ImageMagick*
 
 export CPPFLAGS=-I$IMBUILD/include
 export LDFLAGS=-L$IMBUILD/lib
+export PKG_CONFIG_PATH=$IMBUILD/lib/pkgconfig
+
+echo CONFIGURE: libtool
+curl -sLO --insecure https://ftpmirror.gnu.org/libtool/libtool-2.4.6.tar.gz
+tar xzf libtool*.gz && rm libtool*.gz && mv libtool-* libltdl && cd libltdl
+./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking
+make install
+cd $IMAGICK
 
 echo CONFIGURE: zlib
-curl -LO http://www.imagemagick.org/download/delegates/zlib-1.2.11.tar.xz
+curl -sLO http://www.imagemagick.org/download/delegates/zlib-1.2.11.tar.xz
 _tar_xz zlib*.xz && rm zlib*.xz && mv zlib* zlib && cd zlib
 ./configure --prefix=$IMBUILD --static
 make install
-cd ..
+cd $IMAGICK
 
 echo CONFIGURE: png
-curl -LO http://www.imagemagick.org/download/delegates/libpng-1.6.31.tar.xz
+curl -sLO http://www.imagemagick.org/download/delegates/libpng-1.6.31.tar.xz
 _tar_xz libpng*.xz && rm libpng*.xz && mv libpng* png && cd png
 ./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking
 make install
-cd ..
+cd $IMAGICK
 
 echo CONFIGURE: webp
-curl -LO http://www.imagemagick.org/download/delegates/libwebp-0.6.0.tar.gz
+curl -sLO https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.1.0.tar.gz
 tar zxf libwebp*.gz && rm libwebp*.gz && mv libwebp* webp && cd webp
-./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking
+./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking \
+    --enable-libwebpmux \
+    --enable-libwebpdemux \
+    --enable-libwebpdecoder
 make install
-cd ..
+cd $IMAGICK
 
 echo CONFIGURE: jpeg
-curl -LO http://www.imagemagick.org/download/delegates/jpegsrc.v9b.tar.gz
+curl -sLO http://www.imagemagick.org/download/delegates/jpegsrc.v9b.tar.gz
 tar zxf jpeg*.gz && rm jpeg*.gz && mv jpeg* jpeg && cd jpeg
 ./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking
 make install
-cd ..
+cd $IMAGICK
 
 echo CONFIGURE: tiff
-curl -LO http://www.imagemagick.org/download/delegates/tiff-4.0.8.tar.gz
+curl -sLO http://www.imagemagick.org/download/delegates/tiff-4.0.8.tar.gz
 tar zxf tiff*.gz && rm tiff*.gz && mv tiff* tiff && cd tiff
 ./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking --disable-lzma
 make install
-cd ..
+cd $IMAGICK
 
 echo CONFIGURE: lcms2
-curl -LO http://www.imagemagick.org/download/delegates/lcms2-2.8.tar.gz
+curl -sLO http://www.imagemagick.org/download/delegates/lcms2-2.8.tar.gz
 tar zxf lcms2*.gz && rm lcms2*.gz && mv lcms* lcms && cd lcms
 ./configure --prefix=$IMBUILD --disable-shared --disable-dependency-tracking
 make install
-cd ..
+cd $IMAGICK
 
 ##############################
 # Build ImageMagick
@@ -137,7 +161,7 @@ cd ..
     --with-wmf=no                     \
     --with-x=no                       \
     --with-xml=no                     \
-    --with-zlib=no
+    --with-zlib=yes
 
 
 # The -fPIE compilation flag is required to support cross-compilation between

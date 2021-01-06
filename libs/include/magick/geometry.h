@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image geometry methods.
 */
-#ifndef _MAGICKCORE_GEOMETRY_H
-#define _MAGICKCORE_GEOMETRY_H
+#ifndef MAGICKCORE_GEOMETRY_H
+#define MAGICKCORE_GEOMETRY_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -46,16 +46,18 @@ typedef enum
 #undef YNegative
   YNegative = 0x0040,
   ChiNegative = 0x0080,
-  PercentValue = 0x1000,   /* '%'  percentage of something */
-  AspectValue = 0x2000,    /* '!'  resize no-aspect - special use flag */
-  NormalizeValue = 0x2000, /* '!'  ScaleKernelValue() in morphology.c */
-  LessValue = 0x4000,      /* '<'  resize smaller - special use flag */
-  GreaterValue = 0x8000,   /* '>'  resize larger - spacial use flag */
-  MinimumValue = 0x10000,  /* '^'  special handling needed */
+  PercentValue = 0x1000,    /* '%'  percentage of something */
+  AspectValue = 0x2000,     /* '!'  resize no-aspect - special use flag */
+  NormalizeValue = 0x2000,  /* '!'  ScaleKernelValue() in morphology.c */
+  LessValue = 0x4000,       /* '<'  resize smaller - special use flag */
+  GreaterValue = 0x8000,    /* '>'  resize larger - spacial use flag */
+  MinimumValue = 0x10000,   /* '^'  special handling needed */
   CorrelateNormalizeValue = 0x10000, /* '^' see ScaleKernelValue() */
-  AreaValue = 0x20000,     /* '@'  resize to area - special use flag */
-  DecimalValue = 0x40000,  /* '.'  floating point numbers found */
-  SeparatorValue = 0x80000,  /* 'x'  separator found  */
+  AreaValue = 0x20000,      /* '@'  resize to area - special use flag */
+  DecimalValue = 0x40000,   /* '.'  floating point numbers found */
+  SeparatorValue = 0x80000, /* 'x'  separator found */
+  AspectRatioValue = 0x100000,  /* '~'  special handling needed */
+  AlphaValue = 0x200000,    /* '/'  alpha */
 #undef AllValues
   AllValues = 0x7fffffff
 } GeometryFlags;
@@ -149,8 +151,8 @@ extern MagickExport MagickStatusType
     ExceptionInfo *);
 
 extern MagickExport void
-  GravityAdjustGeometry(const size_t,const size_t,
-    const GravityType,RectangleInfo *),
+  GravityAdjustGeometry(const size_t,const size_t,const GravityType,
+    RectangleInfo *),
   SetGeometry(const Image *,RectangleInfo *),
   SetGeometryInfo(GeometryInfo *);
 

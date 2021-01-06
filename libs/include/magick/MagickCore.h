@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,15 @@
   MagickCore Application Programming Interface declarations.
 */
 
-#ifndef _MAGICKCORE_CORE_H
-#define _MAGICKCORE_CORE_H
+#ifndef MAGICKCORE_CORE_H
+#define MAGICKCORE_CORE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
 
-#if !defined(_MAGICKCORE_CONFIG_H)
-# define _MAGICKCORE_CONFIG_H
+#if !defined(MAGICKCORE_CONFIG_H)
+# define MAGICKCORE_CONFIG_H
 # if !defined(vms) && !defined(macintosh)
 #  include "magick/magick-config.h"
 # else
@@ -36,8 +36,12 @@ extern "C" {
 #if defined(_magickcore_inline) && !defined(inline)
 # define inline _magickcore_inline
 #endif
-#if defined(_magickcore_restrict) && !defined(restrict)
-# define restrict  _magickcore_restrict
+#if !defined(magick_restrict)
+# if !defined(_magickcore_restrict)
+#  define magick_restrict restrict
+# else
+#  define magick_restrict _magickcore_restrict
+# endif
 #endif
 # if defined(__cplusplus) || defined(c_plusplus)
 #  undef inline
@@ -55,6 +59,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <math.h>
 #include <sys/types.h>
 #include <time.h>
 
@@ -70,7 +76,6 @@ extern "C" {
 # include "magick/methods.h"
 #endif
 #include "magick/magick-type.h"
-#include "magick/accelerate.h"
 #include "magick/animate.h"
 #include "magick/annotate.h"
 #include "magick/artifact.h"
@@ -143,6 +148,7 @@ extern "C" {
 #include "magick/shear.h"
 #include "magick/signature.h"
 #include "magick/splay-tree.h"
+#include "magick/static.h"
 #include "magick/stream.h"
 #include "magick/statistic.h"
 #include "magick/string_.h"
@@ -153,6 +159,8 @@ extern "C" {
 #include "magick/type.h"
 #include "magick/utility.h"
 #include "magick/version.h"
+#include "magick/vision.h"
+#include "magick/visual-effects.h"
 #include "magick/xml-tree.h"
 #include "magick/xwindow.h"
 

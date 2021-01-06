@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,12 +15,15 @@
 
   MagickCore delegates methods.
 */
-#ifndef _MAGICKCORE_DELEGATE_H
-#define _MAGICKCORE_DELEGATE_H
+#ifndef MAGICKCORE_DELEGATE_H
+#define MAGICKCORE_DELEGATE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include <stdarg.h>
+#include "magick/semaphore.h"
 
 typedef struct _DelegateInfo
 {
@@ -29,21 +32,24 @@ typedef struct _DelegateInfo
     *decode,
     *encode,
     *commands;
-                                                                                
+
   ssize_t
     mode;
-                                                                                
+
   MagickBooleanType
     thread_support,
     spawn,
     stealth;
-                                                                                
+
   struct _DelegateInfo
     *previous,
     *next;  /* deprecated, use GetDelegateInfoList() */
 
   size_t
     signature;
+
+  SemaphoreInfo
+    *semaphore;
 } DelegateInfo;
 
 extern MagickExport char
@@ -57,6 +63,10 @@ extern MagickExport const char
 extern MagickExport const DelegateInfo
   *GetDelegateInfo(const char *,const char *,ExceptionInfo *exception),
   **GetDelegateInfoList(const char *,size_t *,ExceptionInfo *);
+
+extern MagickExport int
+  ExternalDelegateCommand(const MagickBooleanType,const MagickBooleanType,
+    const char *,char *,ExceptionInfo *);
 
 extern MagickExport ssize_t
   GetDelegateMode(const DelegateInfo *);

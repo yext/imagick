@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image constitute methods.
 */
-#ifndef _MAGICKCORE_CONSTITUTE_H
-#define _MAGICKCORE_CONSTITUTE_H
+#ifndef MAGICKCORE_CONSTITUTE_H
+#define MAGICKCORE_CONSTITUTE_H
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -44,12 +44,8 @@ extern MagickExport Image
   *ReadInlineImage(const ImageInfo *,const char *,ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
-  ConstituteComponentGenesis(void),
   WriteImage(const ImageInfo *,Image *),
   WriteImages(const ImageInfo *,Image *,const char *,ExceptionInfo *);
-
-extern MagickExport void
-  ConstituteComponentTerminus(void);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

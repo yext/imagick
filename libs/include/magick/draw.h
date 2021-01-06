@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-  
-  You may not use this file except in compliance with the License.
+
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
-  
-    http://www.imagemagick.org/script/license.php
-  
+
+    https://imagemagick.org/script/license.php
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +15,14 @@
 
   MagickCore drawing methods.
 */
-#ifndef _MAGICKCORE_DRAW_H
-#define _MAGICKCORE_DRAW_H
+#ifndef MAGICKCORE_DRAW_H
+#define MAGICKCORE_DRAW_H
 
 #include "magick/geometry.h"
 #include "magick/image.h"
 #include "magick/pixel.h"
 #include "magick/type.h"
+#include "magick/color.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -135,7 +136,7 @@ typedef enum
 } SpreadMethod;
 
 typedef struct _PointInfo
-{ 
+{
   double
     x,
     y;
@@ -180,7 +181,11 @@ typedef struct _GradientInfo
     center;
 
   MagickRealType
-    radius;
+    radius,
+    angle;
+
+  PointInfo
+    radii;
 } GradientInfo;
 
 typedef struct _ElementReference
@@ -330,6 +335,25 @@ typedef struct _DrawInfo
 
   DirectionType
     direction;
+
+  double
+    fill_opacity,
+    stroke_opacity;
+
+  MagickBooleanType
+    clip_path;
+
+  Image
+    *clipping_mask;
+
+  ComplianceType
+    compliance;
+
+  Image
+    *composite_mask;
+
+  char
+    *id;
 } DrawInfo;
 
 typedef struct _PrimitiveInfo
@@ -348,6 +372,9 @@ typedef struct _PrimitiveInfo
 
   char
     *text;
+
+  MagickBooleanType
+    closed_subpath;
 } PrimitiveInfo;
 
 typedef struct _TypeMetric

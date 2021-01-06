@@ -1,0 +1,37 @@
+diff --git libs/include/wand/pixel-wand.h libs/include/wand/pixel-wand.h
+index fc339ae..17dc195 100644
+--- libs/include/wand/pixel-wand.h
++++ libs/include/wand/pixel-wand.h
+@@ -22,6 +22,32 @@
+ extern "C" {
+ #endif
+ 
++// PATCH(robfig): Need to define the PixelWand struct in the header to
++// avoid a compile error when it's instantiated by magick_wand_image.go
++struct _PixelWand
++{
++  size_t
++    id;
++
++  char
++    name[MaxTextExtent];
++
++  ExceptionInfo
++    *exception;
++
++  MagickPixelPacket
++    pixel;
++
++  size_t
++    count;
++
++  MagickBooleanType
++    debug;
++
++  size_t
++    signature;
++};
++
+ typedef struct _PixelWand
+   PixelWand;
+ 

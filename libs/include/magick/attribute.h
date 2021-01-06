@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore methods to set or get image attributes.
 */
-#ifndef _MAGICKCORE_ATTRIBUTE_H
-#define _MAGICKCORE_ATTRIBUTE_H
+#ifndef MAGICKCORE_ATTRIBUTE_H
+#define MAGICKCORE_ATTRIBUTE_H
 
 #include "magick/image.h"
 #include "magick/exception.h"
@@ -26,9 +26,12 @@ extern "C" {
 #endif
 
 extern MagickExport ImageType
-  GetImageType(const Image *,ExceptionInfo *);
+  GetImageType(const Image *,ExceptionInfo *),
+  IdentifyImageGray(const Image *,ExceptionInfo *),
+  IdentifyImageType(const Image *,ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
+  IdentifyImageMonochrome(const Image *,ExceptionInfo *),
   IsGrayImage(const Image *,ExceptionInfo *),
   IsMonochromeImage(const Image *,ExceptionInfo *),
   IsOpaqueImage(const Image *,ExceptionInfo *),

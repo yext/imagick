@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,8 +23,8 @@
 extern "C" {
 #endif
 
-#if !defined(_MAGICKWAND_CONFIG_H)
-# define _MAGICKWAND_CONFIG_H
+#if !defined(MAGICKWAND_CONFIG_H)
+# define MAGICKWAND_CONFIG_H
 # if !defined(vms) && !defined(macintosh)
 #  include "magick/magick-config.h"
 # else
@@ -36,8 +36,12 @@ extern "C" {
 #if defined(_magickcore_inline) && !defined(inline)
 # define inline _magickcore_inline
 #endif
-#if defined(_magickcore_restrict) && !defined(restrict)
-# define restrict  _magickcore_restrict
+#if !defined(magick_restrict)
+# if !defined(_magickcore_restrict)
+#  define magick_restrict restrict
+# else
+#  define magick_restrict _magickcore_restrict
+# endif
 #endif
 # if defined(__cplusplus) || defined(c_plusplus)
 #  undef inline
@@ -55,6 +59,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <math.h>
 #include <sys/types.h>
 #include <time.h>

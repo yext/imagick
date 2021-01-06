@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore image constitute methods.
 */
-#ifndef _MAGICKCORE_PIXEL_H
-#define _MAGICKCORE_PIXEL_H
+#ifndef MAGICKCORE_PIXEL_H
+#define MAGICKCORE_PIXEL_H
 
 #include "magick/colorspace.h"
 #include "magick/constitute.h"
@@ -168,7 +168,7 @@ extern MagickExport MagickBooleanType
     const size_t,const char *,const StorageType,void *,ExceptionInfo *),
   ImportImagePixels(Image *,const ssize_t,const ssize_t,const size_t,
     const size_t,const char *,const StorageType,const void *),
-  InterpolateMagickPixelPacket(const Image *,const CacheView_ *,
+  InterpolateMagickPixelPacket(const Image *magick_restrict,const CacheView_ *,
     const InterpolatePixelMethod,const double,const double,MagickPixelPacket *,
     ExceptionInfo *);
 
@@ -178,10 +178,14 @@ extern MagickExport MagickPixelPacket
 extern MagickExport MagickRealType
   DecodePixelGamma(const MagickRealType) magick_hot_spot,
   EncodePixelGamma(const MagickRealType) magick_hot_spot,
-  GetPixelIntensity(const Image *image,const PixelPacket *restrict)
+  GetMagickPixelIntensity(const Image *image,
+    const MagickPixelPacket *magick_restrict) magick_hot_spot,
+  GetPixelIntensity(const Image *image,const PixelPacket *magick_restrict)
     magick_hot_spot;
 
 extern MagickExport void
+  ConformMagickPixelPacket(Image *,const MagickPixelPacket *,
+    MagickPixelPacket *,ExceptionInfo *),
   GetMagickPixelPacket(const Image *,MagickPixelPacket *);
 
 #if defined(__cplusplus) || defined(c_plusplus)

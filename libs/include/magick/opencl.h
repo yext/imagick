@@ -1,11 +1,11 @@
 /*
-  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
-  You may not use this file except in compliance with the License.
+  You may not use this file except in compliance with the License.  You may
   obtain a copy of the License at
   
-    http://www.imagemagick.org/script/license.php
+    https://imagemagick.org/script/license.php
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
 
   MagickCore OpenCL public methods.
 */
-#ifndef _MAGICKCORE_OPENCL_H
-#define _MAGICKCORE_OPENCL_H
+#ifndef MAGICKCORE_OPENCL_H
+#define MAGICKCORE_OPENCL_H
 
 
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -25,25 +25,16 @@ extern "C" {
 
 /* OpenCL program modules */
 typedef enum {
-  MAGICK_OPENCL_ACCELERATE = 0
-  ,MAGICK_OPENCL_NUM_PROGRAMS   /* !!! This has to be the last entry !!! */
+  MAGICK_OPENCL_ACCELERATE = 0,
+  MAGICK_OPENCL_NUM_PROGRAMS   /* !!! This has to be the last entry !!! */
 } MagickOpenCLProgram;
 
-
-typedef struct _MagickCLEnv* MagickCLEnv;
-
-extern MagickExport
-  MagickCLEnv AcquireMagickOpenCLEnv();
-
-extern MagickExport
-  MagickBooleanType RelinquishMagickOpenCLEnv(MagickCLEnv);
-
-extern MagickExport
-  MagickCLEnv GetDefaultOpenCLEnv();
-
-extern MagickExport
-  MagickCLEnv SetDefaultOpenCLEnv(MagickCLEnv);
-
+typedef enum {
+  MAGICK_OPENCL_OFF = 0
+  , MAGICK_OPENCL_DEVICE_SELECT_AUTO = 1
+  , MAGICK_OPENCL_DEVICE_SELECT_USER = 2
+  , MAGICK_OPENCL_DEVICE_SELECT_AUTO_CLEAR_CACHE = 3
+} ImageMagickOpenCLMode;
 
 /* Parameter type accepted by SetMagickOpenCLEnvParm and GetMagickOpenCLEnvParm */
 typedef enum {
@@ -54,27 +45,22 @@ typedef enum {
                                                    /* if true, disable the kernel binary cache */
   , MAGICK_OPENCL_ENV_PARAM_REGENERATE_PROFILE     /* MagickBooleanType */
                                                    /* if true, rerun microbenchmark in auto device selection */
+  , MAGICK_OPENCL_ENV_PARAM_PLATFORM_VENDOR        /* char* */
+  , MAGICK_OPENCL_ENV_PARAM_DEVICE_NAME            /* char* */
 } MagickOpenCLEnvParam;
 
-extern MagickExport
-  MagickBooleanType SetMagickOpenCLEnvParam(MagickCLEnv, MagickOpenCLEnvParam, size_t, void*, ExceptionInfo*);
+typedef struct _MagickCLEnv* MagickCLEnv;
 
-extern MagickExport
-  MagickBooleanType GetMagickOpenCLEnvParam(MagickCLEnv, MagickOpenCLEnvParam, size_t, void*, ExceptionInfo*);
+extern MagickExport MagickBooleanType
+  GetMagickOpenCLEnvParam(MagickCLEnv,MagickOpenCLEnvParam,size_t,void*,
+    ExceptionInfo*),
+  InitImageMagickOpenCL(ImageMagickOpenCLMode,void*,void*,ExceptionInfo*),
+  InitOpenCLEnv(MagickCLEnv,ExceptionInfo*),
+  SetMagickOpenCLEnvParam(MagickCLEnv,MagickOpenCLEnvParam,size_t,void*,
+    ExceptionInfo*);
 
-
-extern MagickExport
-  MagickBooleanType InitOpenCLEnv(MagickCLEnv, ExceptionInfo*);
-
-typedef enum {
-  MAGICK_OPENCL_OFF = 0
-, MAGICK_OPENCL_DEVICE_SELECT_AUTO = 1
-, MAGICK_OPENCL_DEVICE_SELECT_USER = 2
-, MAGICK_OPENCL_DEVICE_SELECT_AUTO_CLEAR_CACHE = 3
-} ImageMagickOpenCLMode ;
-
-extern MagickExport
-MagickBooleanType InitImageMagickOpenCL(ImageMagickOpenCLMode, void*, void*, ExceptionInfo*);
+extern MagickExport MagickCLEnv
+  GetDefaultOpenCLEnv();
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
