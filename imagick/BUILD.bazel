@@ -12,6 +12,7 @@ go_library(
         "-DMAGICKCORE_QUANTUM_DEPTH=16",
         "-DMAGICKCORE_HDRI_ENABLE=0",
     ],
+    deps = ["//imagick/types:go_default_library"],
     importpath = "github.com/yext/imagick/imagick",
     visibility = ["//visibility:public"],
 )

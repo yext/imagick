@@ -1,3 +1,3 @@
-module gopkg.in/gographics/imagick.v2
+module github.com/yext/imagick
 
 go 1.13

@@ -57,7 +57,6 @@ func TestCloningAndDestroying(t *testing.T) {
 	defer Terminate()
 
 	mw := NewMagickWand()
-	t.Skip()
 	clone := mw.Clone()
 	if !clone.IsVerified() {
 		t.Fatal("Unsuccessful clone")
@@ -144,8 +143,6 @@ func contains(slice []string, item string) bool {
 }
 
 func TestDeleteImageArtifact(t *testing.T) {
-	t.Skip()
-
 	Initialize()
 	defer func(t *testing.T) {
 		checkGC(t)
